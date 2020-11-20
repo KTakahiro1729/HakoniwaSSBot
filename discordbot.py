@@ -11,12 +11,6 @@ import mapchip_analyzer as mca
 client = discord.Client()
 TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
-def download_img(url, save_fname):
-    r = requests.get(url, stream=True)
-    if r.status_code == 200:
-        with open(save_fname, 'wb') as f:
-            f.write(r.content)
-
 @client.event
 async def on_ready():
     print('Logged in as')
@@ -34,10 +28,11 @@ async def on_message(msg):
     if msg.attachments:
         try:
             fname = msg.attachments[0].filename
-            # download_img(msg.attachments[0].url, "image.png")
-            # map_img = mca.crop_area("image.png", mca.xbar_path)
-            # arr = mca.decide_mapchip(map_img)
-            # await msg.channel.send(mca.convert_to_sim(arr))
+            print(fname)
+            await attachment.save("image.png")
+            map_img = mca.crop_area("image.png", mca.xbar_path)
+            arr = mca.decide_mapchip(map_img)
+            await msg.channel.send(mca.convert_to_sim(arr))
         except:
             await msg.channel.send("error")
         
