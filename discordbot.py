@@ -8,20 +8,8 @@ import asyncio
 import requests
 import mapchip_analyzer as mca
 
-bot = commands.Bot(command_prefix='/')
+client = discord.Client()
 token = os.environ['DISCORD_BOT_TOKEN']
-
-
-@bot.event
-async def on_command_error(ctx, error):
-    orig_error = getattr(error, "original", error)
-    error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-    await ctx.send(error_msg)
-
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send('pong')
 
 def download_img(url, save_fname):
     r = requests.get(url, stream=True)
@@ -51,4 +39,4 @@ async def on_message(msg):
         await msg.channel.send(mca.convert_to_sim(arr))
 
 
-bot.run(token)
+client.run(TOKEN)
