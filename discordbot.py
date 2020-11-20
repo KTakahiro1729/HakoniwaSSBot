@@ -9,7 +9,7 @@ import requests
 import mapchip_analyzer as mca
 
 client = discord.Client()
-token = os.environ['DISCORD_BOT_TOKEN']
+TOKEN = os.environ['DISCORD_BOT_TOKEN']
 
 def download_img(url, save_fname):
     r = requests.get(url, stream=True)
@@ -32,11 +32,15 @@ async def on_message(msg):
         return
 
     if msg.attachments:
-        fname = msg.attachments[0].filename
-        download_img(msg.attachments[0].url, "image.png")
-        map_img = mca.crop_area("image.png", mca.xbar_path)
-        arr = mca.decide_mapchip(map_img)
-        await msg.channel.send(mca.convert_to_sim(arr))
+        try:
+            fname = msg.attachments[0].filename
+            download_img(msg.attachments[0].url, "image.png")
+            map_img = mca.crop_area("image.png", mca.xbar_path)
+            arr = mca.decide_mapchip(map_img)
+            await msg.channel.send(mca.convert_to_sim(arr))
+        except:
+            await msg.channel.send("error")
+        
 
 
 client.run(TOKEN)
