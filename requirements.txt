@@ -1,5 +1,2 @@
 discord.py[voice]>=1.4.1
 requests==2.18.4
-opencv-python==4.4.0.46
-matplotlib==2.1.2
-numpy==1.14.0
