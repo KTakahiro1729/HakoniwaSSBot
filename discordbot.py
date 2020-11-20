@@ -27,8 +27,8 @@ async def on_message(msg):
 
     if msg.attachments:
         try:
-            fname = msg.attachments[0].filename
-            print(fname)
+            attachment = msg.attachments[0]
+            print(attachment.filename)
             await attachment.save("image.png")
             map_img = mca.crop_area("image.png", mca.xbar_path)
             arr = mca.decide_mapchip(map_img)
